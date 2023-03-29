@@ -102,8 +102,8 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
                 ? (paneltype === "Polycrystalline"
                     ? 120
                     : paneltype === "Monocrystalline"
-                    ? 150
-                    : 150)
+                    ? 125
+                    : 125)
                 : (paneltype === "Polycrystalline"
                     ? 345
                     : paneltype === "Monocrystalline"
@@ -122,7 +122,7 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     // Battery Sizing
     const batterySeries = systemVoltage / batteryVoltageValue;
     const batteryCapacity = parseInt(propertyValues.batteryCapacity);
-    const selectedBattery = batteryArray.find((arr) => parseInt(arr[8]) === batteryCapacity);
+    const selectedBattery = batteryArray.find((arr) => parseInt(arr[8]) === batteryCapacity)
     const totalbatteryAh = (totalEnergy * qnDetails.doa) / (DOD * systemVoltage * 0.85);
     const batteryParallel = Math.ceil(totalbatteryAh / batteryCapacity);
     const batteryNumbers = Math.ceil(batteryParallel * batterySeries);
@@ -130,10 +130,12 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     // Panel Sizing
     const totalPanelWattage = GE / PSH;
     const singlePanelWatt = parseInt(propertyValues.panelWattage); // Get from Catologue
-    const selectedPanel = solarPanelsArray.find((arr) => parseInt(arr[5]) === singlePanelWatt);
+    const selectedPanel = solarPanelsArray.find((arr) => parseInt(arr[5]) === singlePanelWatt)
+    console.log(selectedPanel);
     const singlePanelvoltage = parseInt(selectedPanel[6]);
     const panelNumbers = Math.ceil(totalPanelWattage / singlePanelWatt);
-    const panelSeries = systemVoltage / singlePanelvoltage;
+    console.log(panelNumbers);
+    const panelSeries = Math.ceil(systemVoltage / singlePanelvoltage);
     const panelParallel = Math.ceil(panelNumbers / panelSeries);
     const panelNumbersUpdated = panelSeries * panelParallel;
     
@@ -337,6 +339,7 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
                                 solarPanelsArray={solarPanelsArray}
                                 batteryArray={batteryArray}
                                 systemVoltage={systemVoltage}
+                                totalPanelWattage={totalPanelWattage}
                             />
                         ))}
                     </div>
