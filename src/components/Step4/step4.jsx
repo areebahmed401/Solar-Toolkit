@@ -122,7 +122,7 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     // Battery Sizing
     const batterySeries = systemVoltage / batteryVoltageValue;
     const batteryCapacity = parseInt(propertyValues.batteryCapacity);
-    const selectedBattery = batteryArray.find((arr) => parseInt(arr[8]) === batteryCapacity);
+    const selectedBattery = batteryArray.find((arr) => parseInt(arr[8]) === batteryCapacity)
     const totalbatteryAh = (totalEnergy * qnDetails.doa) / (DOD * systemVoltage * 0.85);
     const batteryParallel = Math.ceil(totalbatteryAh / batteryCapacity);
     const batteryNumbers = Math.ceil(batteryParallel * batterySeries);
