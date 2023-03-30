@@ -152,9 +152,6 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
 
     const panelPrice = selectedPanel[4]
     const batteryPrice = selectedBattery[4]
-    console.log(GE);
-    console.log(GP);
-    console.log(selectedInverter);
     const inverterPrice = selectedInverter[4]
     const controllerPrice = selectedController[4]
 
