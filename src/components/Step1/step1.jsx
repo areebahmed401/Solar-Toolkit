@@ -47,7 +47,6 @@ const Step1 = ({
   };
 
   const added = () => {
-    console.log('added')
     notify('Appliance added successfully','success')
   }
 
