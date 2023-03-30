@@ -92,7 +92,7 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     const batteryVoltageValue = 12;
 
     // Get from Inverter Manual
-    const systemVoltage = totalPower > 3000 ? 48 : totalPower > 1000 ? 24 : 12;
+    const systemVoltage = GP > 3000 ? 48 : GP > 1000 ? 24 : 12;
     const inverterWattage = Math.ceil(GP / 100) * 100;
 
     const [propertyValues, setpropertyValues] = useState({
@@ -117,7 +117,7 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     const batteryArray = batteryType === "Lithium Ion Battery" ? catalogueData.filter(row => row[0] === 'Battery' && row[2] === "Lithium Ion Battery").sort((a,b) => a[8]-b[8]) : catalogueData.filter(row => row[0] === 'Battery' && row[2] === "Lead Acid Battery").sort((a,b) => a[8]-b[8]);
     const chargeControllerArray = catalogueData.filter(row => row[0] === 'Charge Controller').sort((a,b) => a[7]-b[7]);
 
-    const selectedInverter = inverterWattage <= 5000 ? inverterArray.filter((arr) => (parseInt(arr[5]) > inverterWattage) && (parseInt(arr[6]) === systemVoltage)).sort((a,b) => a[5]-b[5])[0] : ['Inverter', 'Unavailable', 'String Inverter', 'No known supplier','Unknown', inverterWattage.toLocaleString(), systemVoltage, '', ''];
+    const selectedInverter = GP <= 5000 ? inverterArray.filter((arr) => (parseInt(arr[5]) > inverterWattage) && (parseInt(arr[6]) === systemVoltage)).sort((a,b) => a[5]-b[5])[0] : ['Inverter', 'Unavailable', 'String Inverter', 'No known supplier','Unknown', inverterWattage.toLocaleString(), systemVoltage, '', ''];
 
     // Battery Sizing
     const batterySeries = systemVoltage / batteryVoltageValue;
@@ -131,10 +131,8 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     const totalPanelWattage = GE / PSH;
     const singlePanelWatt = parseInt(propertyValues.panelWattage); // Get from Catologue
     const selectedPanel = solarPanelsArray.find((arr) => parseInt(arr[5]) === singlePanelWatt)
-    console.log(selectedPanel);
     const singlePanelvoltage = parseInt(selectedPanel[6]);
     const panelNumbers = Math.ceil(totalPanelWattage / singlePanelWatt);
-    console.log(panelNumbers);
     const panelSeries = Math.ceil(systemVoltage / singlePanelvoltage);
     const panelParallel = Math.ceil(panelNumbers / panelSeries);
     const panelNumbersUpdated = panelSeries * panelParallel;
@@ -152,8 +150,11 @@ const Step4 = ({ setStep, appliances, qnDetails, contactDetails, getFromChild, c
     const selectedController = chargeControllerSize <= 80 ? chargeControllerArray.filter((arr) => parseInt(arr[7]) > chargeControllerSize).sort((a,b) => a[5]-b[5])[0] : ['Charge Controller', 'Unavailable', 'PWM', 'No known supplier', 'Unknown', '', '', chargeControllerSize];
 
 
-    const panelPrice = selectedPanel[4];
+    const panelPrice = selectedPanel[4]
     const batteryPrice = selectedBattery[4]
+    console.log(GE);
+    console.log(GP);
+    console.log(selectedInverter);
     const inverterPrice = selectedInverter[4]
     const controllerPrice = selectedController[4]
 

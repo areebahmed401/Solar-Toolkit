@@ -152,7 +152,9 @@ const Toolkit = () => {
       progress: undefined,
       theme: "dark",
       });
+      window.scrollTo({top:0, behavior:'smooth'})
     await sleep(3000);
+    
     window.location.reload(true)
   }
 
